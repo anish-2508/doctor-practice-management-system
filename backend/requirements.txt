@@ -1,0 +1,11 @@
+fastapi 
+pymongo[srv]
+python-dotenv
+pydantic
+uvicorn
+asyncio
+
+pyjwt
+pwdlib[argon2]
+python-multipart
+

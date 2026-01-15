@@ -11,6 +11,12 @@ load_dotenv()
 uri = os.getenv("MONGO_URI")
 
 client = AsyncMongoClient(uri, server_api=pymongo.server_api.ServerApi(
-   version="1", strict=True, deprecation_errors=True))
+version="1", strict=True, deprecation_errors=True))
 
-db = client.doctor_db
+db = client.doctor_practice_app_db
+
+def get_db():
+   return db
+
+
+
