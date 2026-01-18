@@ -10,7 +10,7 @@ async def create_slot(db, doctor_id: str, slot: SlotCreate):
         "booked_by": None,
         "created_at": datetime.utcnow(),
     }
-
+    
     result = await db.slots.insert_one(slot_doc)
     slot_doc["_id"] = result.inserted_id
     return slot_doc
