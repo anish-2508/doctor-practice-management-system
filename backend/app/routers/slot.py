@@ -1,31 +1,18 @@
 from fastapi import APIRouter, Depends
-from app.models.slot import SlotResponse, SlotCreate
-from app.services.slot import create_slot, get_doctor_slots
-from app.services.auth import get_current_active_doctor
+from app.models.slot import SlotResponse
+from app.services.slot import generate_slots_for_doctor, get_doctor_slots, lock_slot, unlock_slot
+from app.services.auth import get_current_active_doctor, get_current_active_patient
 from app.db.mongo import get_db
 from typing import List
 
-router = APIRouter(prefix="/doctor/slots", tags=["Slots"])
+router = APIRouter(tags=["Slots"])
 
-@router.post("", response_model= SlotResponse)
-async def create_doctor_slot(
-    slot: SlotCreate,
-    db=Depends(get_db),
-    current_doctor=Depends(get_current_active_doctor),
-    ):
-    slot_doc = await create_slot(db, str(current_doctor["_id"]), slot)
-    return {
-        "id": str(slot_doc["_id"]),
-        "start_time": slot_doc["start_time"],
-        "end_time": slot_doc["end_time"],
-        "is_booked": slot_doc["is_booked"],
-    }
-     
-@router.get("", response_model=List[SlotResponse])
+@router.get("/doctor/slots", response_model=List[SlotResponse])
 async def list_doctor_slots(
     db=Depends(get_db),
     current_doctor=Depends(get_current_active_doctor),
-    ):
+):
+    await generate_slots_for_doctor(db, current_doctor)
     slots = await get_doctor_slots(db, str(current_doctor["_id"]))
     return [
         {
@@ -37,3 +24,20 @@ async def list_doctor_slots(
         for slot in slots
     ]
 
+
+@router.post("/slots/{slot_id}/lock")
+async def lock_patient_slot(
+    slot_id: str,
+    db=Depends(get_db),
+    current_patient=Depends(get_current_active_patient),
+):
+    return await lock_slot(db, slot_id, str(current_patient["_id"]))
+
+
+@router.delete("/slots/{slot_id}/lock")
+async def unlock_patient_slot(
+    slot_id: str,
+    db=Depends(get_db),
+    current_patient=Depends(get_current_active_patient),
+):
+    return await unlock_slot(db, slot_id, str(current_patient["_id"]))

@@ -1,3 +1,4 @@
+# Authentication router
 from datetime import timedelta
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -9,14 +10,17 @@ from app.services.auth import create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
 
 router = APIRouter(tags=["Auth"])
 
+# Login endpoint to authenticate doctor and generate JWT token
 @router.post("/token", response_model=Token)
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     db = Depends(get_db),
 ):
+    print(f"[Auth] Attempting login with email: {form_data.username}")
     doctor = await authenticate_doctor(db, form_data.username, form_data.password)
 
     if not doctor:
+        print(f"[Auth] Login failed - invalid credentials for email: {form_data.username}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
@@ -25,10 +29,11 @@ async def login_for_access_token(
 
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": doctor["email"]},
-        expires_delta=access_token_expires,
-    )
+    data={"sub": doctor.email, "role": "doctor"},
+    expires_delta=access_token_expires,
+)
 
+    print(f"[Auth] Login successful for email: {form_data.username}")
     return Token(access_token=access_token, token_type="bearer")
 
 
