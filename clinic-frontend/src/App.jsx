@@ -18,11 +18,13 @@ import DoctorDashboard from './pages/doctor/DoctorDashboard';
 import DoctorProfile from './pages/doctor/DoctorProfile';
 import DoctorSlots from './pages/doctor/DoctorSlots';
 import DoctorBookings from './pages/doctor/DoctorBookings';
+import DoctorRecords from './pages/doctor/DoctorRecords';
 
 // patient pages
 import PatientDashboard from './pages/patient/PatientDashboard';
 import PatientProfile from './pages/patient/PatientProfile';
 import PatientBookings from './pages/patient/PatientBookings';
+import PatientRecords from './pages/patient/PatientRecords';
 import BrowseDoctors from './pages/patient/BrowseDoctors';
 import DoctorDetail from './pages/patient/DoctorDetail';
 
@@ -63,6 +65,7 @@ export default function App() {
           <Route path="/patient/dashboard" element={<PatientDashboard />} />
           <Route path="/patient/profile" element={<PatientProfile />} />
           <Route path="/patient/bookings" element={<PatientBookings />} />
+          <Route path="/patient/records" element={<PatientRecords />} />
           <Route path="/patient/browse" element={<BrowseDoctors />} />
         </Route>
 
@@ -72,6 +75,7 @@ export default function App() {
           <Route path="/doctor/profile" element={<DoctorProfile />} />
           <Route path="/doctor/slots" element={<DoctorSlots />} />
           <Route path="/doctor/bookings" element={<DoctorBookings />} />
+          <Route path="/doctor/records" element={<DoctorRecords />} />
         </Route>
 
         {/* fallback */}

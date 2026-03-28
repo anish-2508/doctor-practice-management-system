@@ -39,6 +39,11 @@ export const getDoctorPatientRecords = (patientId) => {
   return api.get(`/doctor/patients/${patientId}/records`);
 };
 
+export const getDoctorRecords = (params = {}) => {
+  console.log('[Doctor API] Fetching doctor records');
+  return api.get('/doctor/records', { params });
+};
+
 export const createPatientRecord = (data) => {
   console.log(`[Doctor API] Creating patient record for booking ID: ${data.booking_id}`);
   return api.post('/doctor/records', data);
@@ -47,4 +52,20 @@ export const createPatientRecord = (data) => {
 export const updatePatientRecord = (recordId, data) => {
   console.log(`[Doctor API] Updating patient record ID: ${recordId}`);
   return api.put(`/doctor/records/${recordId}`, data);
+};
+
+export const uploadDoctorRecordAttachment = (recordId, file) => {
+  console.log(`[Doctor API] Uploading attachment for record ID: ${recordId}`);
+  const formData = new FormData();
+  formData.append('file', file);
+  return api.post(`/doctor/records/${recordId}/attachments`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
+export const downloadDoctorRecordAttachment = (recordId, attachmentId) => {
+  console.log(`[Doctor API] Downloading attachment ${attachmentId} for record ID: ${recordId}`);
+  return api.get(`/doctor/records/${recordId}/attachments/${attachmentId}/download`, {
+    responseType: 'blob',
+  });
 };

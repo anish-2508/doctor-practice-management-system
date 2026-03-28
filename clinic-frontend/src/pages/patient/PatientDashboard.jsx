@@ -81,6 +81,14 @@ export default function PatientDashboard() {
         >
           View All Bookings
         </Button>
+        <Button
+          size="lg"
+          variant="outlined"
+          sx={{ borderColor: '#8d99ae', color: '#2b2d42', '&:hover': { backgroundColor: '#d0d9e0' } }}
+          onClick={() => navigate('/patient/records')}
+        >
+          Medical Records
+        </Button>
       </Box>
 
       <Divider sx={{ mb: 4 }} />

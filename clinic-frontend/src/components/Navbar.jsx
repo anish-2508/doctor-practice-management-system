@@ -92,6 +92,9 @@ export default function Navbar() {
             <button style={navLinkStyle('/patient/bookings')} onClick={() => handleNavigation('/patient/bookings')}>
               My Bookings
             </button>
+            <button style={navLinkStyle('/patient/records')} onClick={() => handleNavigation('/patient/records')}>
+              Records
+            </button>
             <button style={navLinkStyle('/patient/profile')} onClick={() => handleNavigation('/patient/profile')}>
               Profile
             </button>
@@ -106,6 +109,9 @@ export default function Navbar() {
             </button>
             <button style={navLinkStyle('/doctor/bookings')} onClick={() => handleNavigation('/doctor/bookings')}>
               Bookings
+            </button>
+            <button style={navLinkStyle('/doctor/records')} onClick={() => handleNavigation('/doctor/records')}>
+              Records
             </button>
             <button style={navLinkStyle('/doctor/slots')} onClick={() => handleNavigation('/doctor/slots')}>
               Slots

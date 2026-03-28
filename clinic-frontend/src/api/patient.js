@@ -27,6 +27,26 @@ export const getUpcomingBookings = () => {
   return api.get('/patient/bookings/upcoming');
 };
 
+// records
+export const getPatientRecords = (params = {}) => {
+  console.log('[Patient API] Fetching patient records');
+  return api.get('/patient/records', { params });
+};
+
+export const downloadPatientRecordAttachment = (recordId, attachmentId) => {
+  console.log(`[Patient API] Downloading attachment ${attachmentId} for record ID: ${recordId}`);
+  return api.get(`/patient/records/${recordId}/attachments/${attachmentId}/download`, {
+    responseType: 'blob',
+  });
+};
+
+export const downloadPatientPrescription = (recordId) => {
+  console.log(`[Patient API] Downloading prescription for record ID: ${recordId}`);
+  return api.get(`/patient/records/${recordId}/prescription/download`, {
+    responseType: 'blob',
+  });
+};
+
 export const getBookingStatus = (bookingId) => {
   console.log(`[Patient API] Fetching booking status for ID: ${bookingId}`);
   return api.get(`/patient/bookings/${bookingId}/status`);
