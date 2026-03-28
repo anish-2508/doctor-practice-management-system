@@ -6,7 +6,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://doctor-practice-management-system-ad30.onrender.com", "http://localhost:5173"],
+    allow_origins=["https://doctor-practice-management-system-ad30.onrender.com", "https://wellbook.onrender.com" "http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
