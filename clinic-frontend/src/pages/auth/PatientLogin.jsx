@@ -12,6 +12,7 @@ import FormHelperText from '@mui/joy/FormHelperText';
 import { loginPatient } from '../../api/auth';
 import { getPatientMe } from '../../api/patient';
 import { useAuth } from '../../context/AuthContext';
+import DemoAccountsInfo from '../../components/DemoAccountsInfo';
 
 export default function PatientLogin() {
   const navigate = useNavigate();
@@ -71,6 +72,8 @@ export default function PatientLogin() {
             <Typography level="h2">Welcome Back</Typography>
             <Typography level="body-sm">Login to manage your appointments</Typography>
           </Box>
+
+          <DemoAccountsInfo />
 
           <FormControl>
             <FormLabel>Email</FormLabel>
